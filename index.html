@@ -1,0 +1,2113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Intelligent Loan Risk Assessment</title>
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --navy: #0f172a;
+    --text: #334155;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --background: #f1f5f9;
+    --white: #ffffff;
+    --green: #16a34a;
+    --orange: #f59e0b;
+    --red: #dc2626;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top left, #dbeafe 0, transparent 35%),
+        linear-gradient(135deg, #f8fafc, #eef4ff);
+
+    color: var(--text);
+    font-family:
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+
+/* =========================================================
+   TOP NAVIGATION
+========================================================= */
+
+.navbar {
+    height: 72px;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        #60a5fa
+    );
+
+    color: white;
+    font-size: 21px;
+
+    box-shadow:
+        0 6px 15px rgba(37,99,235,0.25);
+}
+
+.brand-text h3 {
+    color: var(--navy);
+    font-size: 17px;
+}
+
+.brand-text span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border-radius: 20px;
+
+    background: #f0fdf4;
+    color: #15803d;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.container {
+    width: min(1180px, 92%);
+    margin: 40px auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr;
+    gap: 25px;
+
+    margin-bottom: 28px;
+}
+
+.hero-main {
+    padding: 38px;
+
+    border-radius: 24px;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,255,255,0.15),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #0f2f75,
+            #2563eb
+        );
+
+    box-shadow:
+        0 20px 45px rgba(37,99,235,0.20);
+
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-main::after {
+    content: "ML";
+
+    position: absolute;
+    right: 25px;
+    bottom: -35px;
+
+    font-size: 130px;
+    font-weight: 900;
+
+    opacity: 0.06;
+}
+
+.hero-tag {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    margin-bottom: 17px;
+}
+
+.hero-main h1 {
+    font-size: clamp(27px, 4vw, 42px);
+    line-height: 1.12;
+
+    margin-bottom: 14px;
+}
+
+.hero-main p {
+    max-width: 620px;
+
+    line-height: 1.7;
+
+    color: #dbeafe;
+
+    font-size: 14px;
+}
+
+.hero-side {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,0.06);
+}
+
+.hero-side h3 {
+    color: var(--navy);
+    margin-bottom: 20px;
+}
+
+.feature {
+    display: flex;
+    gap: 12px;
+
+    padding: 12px 0;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.feature:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+
+    color: var(--primary);
+}
+
+.feature strong {
+    display: block;
+
+    font-size: 13px;
+
+    color: var(--navy);
+
+    margin-bottom: 3px;
+}
+
+.feature span {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+
+/* =========================================================
+   CONTENT GRID
+========================================================= */
+
+.content-grid {
+    display: grid;
+
+    grid-template-columns: 1.65fr 0.8fr;
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: rgba(255,255,255,0.95);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 10px 30px rgba(15,23,42,0.06);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-title-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    color: var(--primary);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+.card-title h2 {
+    font-size: 19px;
+    color: var(--navy);
+}
+
+.card-title p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #475569;
+
+    margin-bottom: 8px;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-prefix {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--muted);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.input-wrap input {
+    padding-left: 38px;
+}
+
+input,
+select {
+    width: 100%;
+
+    height: 46px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 10px;
+
+    padding: 0 13px;
+
+    background: #fff;
+
+    color: var(--navy);
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition: all .2s;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 4px rgba(37,99,235,0.09);
+}
+
+input[type="range"] {
+    height: 6px;
+
+    padding: 0;
+
+    accent-color: var(--primary);
+
+    border: none;
+
+    box-shadow: none;
+}
+
+.range-line {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 7px;
+
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.range-value {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   DTI
+========================================================= */
+
+.dti-card {
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid var(--border);
+}
+
+.dti-top {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+}
+
+.dti-top span:first-child {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.dti-top span:last-child {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.progress {
+    width: 100%;
+    height: 7px;
+
+    border-radius: 10px;
+
+    background: #e2e8f0;
+
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+
+    width: 25%;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        #22c55e,
+        #f59e0b,
+        #ef4444
+    );
+
+    transition: width .3s;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+button {
+    height: 48px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: all .2s;
+}
+
+.assess-btn {
+    flex: 1;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,0.22);
+}
+
+.assess-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 24px rgba(37,99,235,0.28);
+}
+
+.reset-btn {
+    width: 120px;
+
+    color: #475569;
+
+    background: #f1f5f9;
+}
+
+.reset-btn:hover {
+    background: #e2e8f0;
+}
+
+
+/* =========================================================
+   SIDE INFO
+========================================================= */
+
+.info-card {
+    background: #0f172a;
+
+    color: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 15px 35px rgba(15,23,42,0.16);
+}
+
+.info-card h3 {
+    font-size: 17px;
+
+    margin-bottom: 20px;
+}
+
+.model-item {
+    padding: 14px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.1);
+}
+
+.model-item:last-child {
+    border-bottom: none;
+}
+
+.model-item span {
+    display: block;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .8px;
+
+    margin-bottom: 5px;
+}
+
+.model-item strong {
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESULT
+========================================================= */
+
+#resultSection {
+    display: none;
+
+    margin-top: 25px;
+}
+
+.result-card {
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 12px 35px rgba(15,23,42,0.08);
+}
+
+.result-header {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.result-header span {
+    display: inline-block;
+
+    padding: 6px 11px;
+
+    background: #eff6ff;
+
+    color: var(--primary);
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+.result-header h2 {
+    color: var(--navy);
+
+    font-size: 22px;
+
+    margin-top: 10px;
+}
+
+.risk-area {
+    display: flex;
+
+    justify-content: center;
+
+    margin: 15px 0 25px;
+}
+
+.risk-circle {
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #f8fafc;
+
+    border: 10px solid #dbeafe;
+
+    box-shadow:
+        inset 0 0 0 1px #e2e8f0;
+}
+
+.risk-circle .emoji {
+    font-size: 28px;
+}
+
+.risk-circle .level {
+    font-size: 24px;
+
+    font-weight: 900;
+
+    margin-top: 4px;
+}
+
+.risk-circle .percentage {
+    font-size: 12px;
+
+    color: var(--muted);
+
+    margin-top: 3px;
+}
+
+.low-border {
+    border-color: #bbf7d0;
+}
+
+.medium-border {
+    border-color: #fde68a;
+}
+
+.high-border {
+    border-color: #fecaca;
+}
+
+.low-text {
+    color: var(--green);
+}
+
+.medium-text {
+    color: #d97706;
+}
+
+.high-text {
+    color: var(--red);
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+.summary-title {
+    color: var(--navy);
+
+    font-size: 15px;
+
+    margin: 20px 0 12px;
+}
+
+.summary {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+}
+
+.summary-item {
+    padding: 13px;
+
+    border: 1px solid var(--border);
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+}
+
+.summary-item small {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    margin-bottom: 4px;
+}
+
+.summary-item strong {
+    color: var(--navy);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.note {
+    margin-top: 18px;
+
+    padding: 14px 16px;
+
+    background: #fffbeb;
+
+    border-left: 4px solid #f59e0b;
+
+    border-radius: 8px;
+
+    color: #78350f;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 30px 10px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width: 900px) {
+
+    .hero,
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-side {
+        display: none;
+    }
+}
+
+@media(max-width: 650px) {
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .status {
+        display: none;
+    }
+
+    .container {
+        width: 94%;
+        margin: 25px auto;
+    }
+
+    .hero-main {
+        padding: 27px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    .reset-btn {
+        width: 100%;
+    }
+
+    .summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .risk-circle {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     NAVBAR
+======================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🏦
+        </div>
+
+        <div class="brand-text">
+
+            <h3>Loan Risk AI</h3>
+
+            <span>Intelligent Risk Assessment</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="status">
+
+        <span class="status-dot"></span>
+
+        System Ready
+
+    </div>
+
+</nav>
+
+
+
+<!-- =======================================================
+     MAIN
+======================================================== -->
+
+<main class="container">
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-main">
+
+            <span class="hero-tag">
+                MACHINE LEARNING • RISK ANALYTICS
+            </span>
+
+            <h1>
+                Intelligent Loan<br>
+                Risk Assessment
+            </h1>
+
+            <p>
+                Evaluate applicant information and generate an
+                intelligent loan risk assessment using a
+                machine-learning based approach.
+            </p>
+
+        </div>
+
+
+        <div class="hero-side">
+
+            <h3>Assessment Features</h3>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <strong>Risk Analysis</strong>
+
+                    <span>
+                        Probability-based assessment
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🧮
+                </div>
+
+                <div>
+
+                    <strong>Automatic DTI</strong>
+
+                    <span>
+                        Debt-to-income calculated instantly
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <strong>Instant Results</strong>
+
+                    <span>
+                        Assessment generated immediately
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <strong>Structured Input</strong>
+
+                    <span>
+                        Essential applicant information only
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content-grid">
+
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-title">
+
+                    <div class="card-title-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <h2>Applicant Details</h2>
+
+                        <p>
+                            Enter the applicant's financial information
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <!-- AGE -->
+
+                <div class="form-group">
+
+                    <label>
+                        AGE
+                    </label>
+
+                    <input
+                        type="range"
+                        id="age"
+                        min="18"
+                        max="80"
+                        value="28"
+                        oninput="updateAge()"
+                    >
+
+                    <div class="range-line">
+
+                        <span>18 years</span>
+
+                        <span class="range-value">
+                            <span id="ageValue">28</span> years
+                        </span>
+
+                        <span>80 years</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INCOME -->
+
+                <div class="form-group">
+
+                    <label>
+                        MONTHLY INCOME
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-prefix">₹</span>
+
+                        <input
+                            type="number"
+                            id="income"
+                            value="60000"
+                            min="1"
+                            oninput="calculateDTI()"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DEBT -->
+
+                <div class="form-group">
+
+                    <label>
+                        EXISTING MONTHLY DEBT
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-prefix">₹</span>
+
+                        <input
+                            type="number"
+                            id="debt"
+                            value="15000"
+                            min="0"
+                            oninput="calculateDTI()"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DTI -->
+
+                <div class="form-group">
+
+                    <label>
+                        DEBT-TO-INCOME RATIO
+                    </label>
+
+                    <div class="dti-card">
+
+                        <div class="dti-top">
+
+                            <span>
+                                Calculated automatically
+                            </span>
+
+                            <span id="dti">
+                                25.00%
+                            </span>
+
+                        </div>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                id="dtiBar"
+                                style="width:25%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOAN -->
+
+                <div class="form-group">
+
+                    <label>
+                        LOAN AMOUNT
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-prefix">₹</span>
+
+                        <input
+                            type="number"
+                            id="loanAmount"
+                            value="500000"
+                            min="1"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERM -->
+
+                <div class="form-group">
+
+                    <label>
+                        LOAN TERM
+                    </label>
+
+                    <select id="loanTerm">
+
+                        <option value="12">
+                            12 months
+                        </option>
+
+                        <option value="24">
+                            24 months
+                        </option>
+
+                        <option value="36">
+                            36 months
+                        </option>
+
+                        <option value="48">
+                            48 months
+                        </option>
+
+                        <option value="60" selected>
+                            60 months
+                        </option>
+
+                        <option value="72">
+                            72 months
+                        </option>
+
+                        <option value="84">
+                            84 months
+                        </option>
+
+                        <option value="120">
+                            120 months
+                        </option>
+
+                        <option value="180">
+                            180 months
+                        </option>
+
+                        <option value="240">
+                            240 months
+                        </option>
+
+                        <option value="360">
+                            360 months
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- INTEREST -->
+
+                <div class="form-group">
+
+                    <label>
+                        INTEREST RATE
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-prefix">%</span>
+
+                        <input
+                            type="number"
+                            id="interestRate"
+                            value="9.5"
+                            min="0"
+                            max="50"
+                            step="0.1"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- CREDIT SCORE -->
+
+                <div class="form-group">
+
+                    <label>
+                        CREDIT SCORE
+                    </label>
+
+                    <input
+                        type="range"
+                        id="creditScore"
+                        min="300"
+                        max="900"
+                        value="750"
+                        oninput="updateCreditScore()"
+                    >
+
+                    <div class="range-line">
+
+                        <span>300</span>
+
+                        <span class="range-value">
+
+                            <span id="creditValue">
+                                750
+                            </span>
+
+                        </span>
+
+                        <span>900</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PURPOSE -->
+
+                <div class="form-group full">
+
+                    <label>
+                        LOAN PURPOSE
+                    </label>
+
+                    <select id="purpose">
+
+                        <option>
+                            Home Purchase
+                        </option>
+
+                        <option>
+                            Refinancing
+                        </option>
+
+                        <option>
+                            Education
+                        </option>
+
+                        <option>
+                            Debt Consolidation
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <button
+                    class="assess-btn"
+                    onclick="assessRisk()"
+                >
+                    🔍 Assess Loan Risk
+                </button>
+
+                <button
+                    class="reset-btn"
+                    onclick="resetForm()"
+                >
+                    ↻ Reset
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODEL INFO -->
+
+        <aside class="info-card">
+
+            <h3>
+                🤖 Model Information
+            </h3>
+
+
+            <div class="model-item">
+
+                <span>Algorithm</span>
+
+                <strong>
+                    Random Forest
+                </strong>
+
+            </div>
+
+
+            <div class="model-item">
+
+                <span>Assessment</span>
+
+                <strong>
+                    Binary Risk Prediction
+                </strong>
+
+            </div>
+
+
+            <div class="model-item">
+
+                <span>Output</span>
+
+                <strong>
+                    Risk Probability %
+                </strong>
+
+            </div>
+
+
+            <div class="model-item">
+
+                <span>Risk Categories</span>
+
+                <strong>
+                    Low • Medium • High
+                </strong>
+
+            </div>
+
+
+            <div class="model-item">
+
+                <span>Input Features</span>
+
+                <strong>
+                    8 Essential Inputs
+                </strong>
+
+            </div>
+
+
+            <div class="model-item">
+
+                <span>DTI</span>
+
+                <strong>
+                    Automatically Calculated
+                </strong>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         RESULT
+    ==================================================== -->
+
+    <section id="resultSection">
+
+        <div class="result-card">
+
+            <div class="result-header">
+
+                <span>
+                    Assessment Complete
+                </span>
+
+                <h2>
+                    Loan Risk Result
+                </h2>
+
+            </div>
+
+
+            <div class="risk-area">
+
+                <div
+                    class="risk-circle"
+                    id="riskCircle"
+                >
+
+                    <div
+                        class="emoji"
+                        id="riskEmoji"
+                    >
+                        🟢
+                    </div>
+
+                    <div
+                        class="level low-text"
+                        id="riskLevel"
+                    >
+                        LOW
+                    </div>
+
+                    <div
+                        class="percentage"
+                        id="riskPercentage"
+                    >
+                        20.00%
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-title">
+                Applicant Summary
+            </div>
+
+
+            <div class="summary">
+
+                <div class="summary-item">
+
+                    <small>Age</small>
+
+                    <strong id="summaryAge">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Monthly Income</small>
+
+                    <strong id="summaryIncome">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Existing Debt</small>
+
+                    <strong id="summaryDebt">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>DTI</small>
+
+                    <strong id="summaryDTI">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Loan Amount</small>
+
+                    <strong id="summaryLoan">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Loan Term</small>
+
+                    <strong id="summaryTerm">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Interest Rate</small>
+
+                    <strong id="summaryInterest">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Credit Score</small>
+
+                    <strong id="summaryCredit">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <small>Loan Purpose</small>
+
+                    <strong id="summaryPurpose">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<footer>
+
+    Intelligent Loan Risk Assessment &nbsp;•&nbsp;
+    Machine Learning Project &nbsp;•&nbsp;
+    Local Web Application
+
+</footer>
+
+
+
+<script>
+
+/* =========================================================
+   AGE
+========================================================= */
+
+function updateAge() {
+
+    const value =
+        document.getElementById("age").value;
+
+    document.getElementById("ageValue")
+        .innerText = value;
+}
+
+
+/* =========================================================
+   CREDIT SCORE
+========================================================= */
+
+function updateCreditScore() {
+
+    const value =
+        document.getElementById("creditScore").value;
+
+    document.getElementById("creditValue")
+        .innerText = value;
+}
+
+
+/* =========================================================
+   DTI
+========================================================= */
+
+function calculateDTI() {
+
+    const income =
+        Number(
+            document.getElementById("income").value
+        ) || 0;
+
+    const debt =
+        Number(
+            document.getElementById("debt").value
+        ) || 0;
+
+    let dti = 0;
+
+    if (income > 0) {
+
+        dti =
+            (debt / income) * 100;
+    }
+
+
+    document.getElementById("dti")
+        .innerText =
+        dti.toFixed(2) + "%";
+
+
+    const bar =
+        document.getElementById("dtiBar");
+
+    bar.style.width =
+        Math.min(dti, 100) + "%";
+}
+
+
+/* =========================================================
+   ASSESS
+========================================================= */
+
+function assessRisk() {
+
+    const age =
+        Number(
+            document.getElementById("age").value
+        );
+
+    const income =
+        Number(
+            document.getElementById("income").value
+        );
+
+    const debt =
+        Number(
+            document.getElementById("debt").value
+        );
+
+    const loan =
+        Number(
+            document.getElementById("loanAmount").value
+        );
+
+    const term =
+        Number(
+            document.getElementById("loanTerm").value
+        );
+
+    const interest =
+        Number(
+            document.getElementById("interestRate").value
+        );
+
+    const credit =
+        Number(
+            document.getElementById("creditScore").value
+        );
+
+    const purpose =
+        document.getElementById("purpose").value;
+
+
+    if (income <= 0 || loan <= 0) {
+
+        alert(
+            "Please enter valid income and loan amount."
+        );
+
+        return;
+    }
+
+
+    const dti =
+        (debt / income) * 100;
+
+
+    /*
+       PRESENTATION-LEVEL DEMO SCORE
+
+       This is not the trained Random Forest.
+       It will later be replaced by the
+       real Python model response.
+    */
+
+    let risk = 20;
+
+
+    /* DTI */
+
+    if (dti > 20)
+        risk += 8;
+
+    if (dti > 35)
+        risk += 15;
+
+    if (dti > 50)
+        risk += 20;
+
+
+    /* CREDIT SCORE */
+
+    if (credit < 700)
+        risk += 10;
+
+    if (credit < 600)
+        risk += 15;
+
+    if (credit >= 750)
+        risk -= 8;
+
+
+    /* INTEREST */
+
+    if (interest > 12)
+        risk += 8;
+
+    if (interest > 15)
+        risk += 10;
+
+
+    /* LOAN */
+
+    if (loan > 1000000)
+        risk += 8;
+
+
+    /* AGE */
+
+    if (age < 21)
+        risk += 4;
+
+
+    /* TERM */
+
+    if (term > 180)
+        risk += 4;
+
+
+    risk =
+        Math.max(
+            1,
+            Math.min(99, risk)
+        );
+
+
+    /* =====================================================
+       RISK LEVEL
+    ===================================================== */
+
+    let level;
+    let emoji;
+
+    const circle =
+        document.getElementById("riskCircle");
+
+    const levelElement =
+        document.getElementById("riskLevel");
+
+
+    circle.className =
+        "risk-circle";
+
+    levelElement.className =
+        "level";
+
+
+    if (risk < 33.33) {
+
+        level = "LOW";
+        emoji = "🟢";
+
+        circle.classList.add(
+            "low-border"
+        );
+
+        levelElement.classList.add(
+            "low-text"
+        );
+
+    }
+
+    else if (risk < 66.67) {
+
+        level = "MEDIUM";
+        emoji = "🟠";
+
+        circle.classList.add(
+            "medium-border"
+        );
+
+        levelElement.classList.add(
+            "medium-text"
+        );
+
+    }
+
+    else {
+
+        level = "HIGH";
+        emoji = "🔴";
+
+        circle.classList.add(
+            "high-border"
+        );
+
+        levelElement.classList.add(
+            "high-text"
+        );
+    }
+
+
+    document.getElementById("riskEmoji")
+        .innerText = emoji;
+
+
+    document.getElementById("riskLevel")
+        .innerText = level;
+
+
+    document.getElementById("riskPercentage")
+        .innerText =
+        risk.toFixed(2) + "%";
+
+
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+    document.getElementById("summaryAge")
+        .innerText =
+        age + " years";
+
+
+    document.getElementById("summaryIncome")
+        .innerText =
+        "₹" +
+        income.toLocaleString("en-IN");
+
+
+    document.getElementById("summaryDebt")
+        .innerText =
+        "₹" +
+        debt.toLocaleString("en-IN");
+
+
+    document.getElementById("summaryDTI")
+        .innerText =
+        dti.toFixed(2) + "%";
+
+
+    document.getElementById("summaryLoan")
+        .innerText =
+        "₹" +
+        loan.toLocaleString("en-IN");
+
+
+    document.getElementById("summaryTerm")
+        .innerText =
+        term + " months";
+
+
+    document.getElementById("summaryInterest")
+        .innerText =
+        interest.toFixed(2) + "%";
+
+
+    document.getElementById("summaryCredit")
+        .innerText =
+        credit;
+
+
+    document.getElementById("summaryPurpose")
+        .innerText =
+        purpose;
+
+
+    /* SHOW RESULT */
+
+    const result =
+        document.getElementById(
+            "resultSection"
+        );
+
+    result.style.display =
+        "block";
+
+
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetForm() {
+
+    document.getElementById("age").value = 28;
+
+    document.getElementById("income").value = 60000;
+
+    document.getElementById("debt").value = 15000;
+
+    document.getElementById("loanAmount").value = 500000;
+
+    document.getElementById("loanTerm").value = 60;
+
+    document.getElementById("interestRate").value = 9.5;
+
+    document.getElementById("creditScore").value = 750;
+
+    document.getElementById("purpose").value =
+        "Home Purchase";
+
+
+    updateAge();
+
+    updateCreditScore();
+
+    calculateDTI();
+
+
+    document.getElementById(
+        "resultSection"
+    ).style.display = "none";
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* INITIALIZE */
+
+updateAge();
+
+updateCreditScore();
+
+calculateDTI();
+
+</script>
+
+</body>
+</html>
