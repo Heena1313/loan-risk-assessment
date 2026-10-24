@@ -130,9 +130,3 @@ Actual performance depends on the dataset, preprocessing, target definition, and
 ## 12. Disclaimer
 
 This project is developed for educational and research purposes. Its predictions are intended to support risk analysis and should not be used as the sole basis for real-world loan approval or rejection decisions.
-
-## Author
-
-**Heena Kausar**
-
-Machine Learning Project — Intelligent Loan Risk Assessment
