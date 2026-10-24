@@ -126,7 +126,3 @@ Actual performance depends on the dataset, preprocessing, target definition, and
 - Add clear risk probability displays where appropriately validated.
 - Evaluate the model on additional datasets.
 - Deploy the system for demonstration and testing.
-
-## 12. Disclaimer
-
-This project is developed for educational and research purposes. Its predictions are intended to support risk analysis and should not be used as the sole basis for real-world loan approval or rejection decisions.
